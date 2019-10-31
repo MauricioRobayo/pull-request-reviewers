@@ -1,0 +1,14 @@
+language: node_js
+notifications:
+  email:
+    on_failure: always
+node_js:
+  - '10.16.0'
+script:
+  - npm run build
+deploy:
+  provider: pages:git
+  edge: true # opt in to dpl v2
+  local_dir: dist
+  on:
+    branch: master
