@@ -1,7 +1,7 @@
 {
   "name": "pull-request-reviewers",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple interface to get a pull request comments authors",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --open",
