@@ -1,0 +1,27 @@
+#loader {
+  --primary-color: #6f23ff;
+  --secondary-color: #cdb2ff;
+  --size: 32px;
+  --speed: 0.75s;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+#loader > * {
+  grid-area: 1/1/-1/-1;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+}
+#loader > div {
+  box-sizing: border-box;
+  animation: var(--speed) spin linear infinite;
+  border: calc(var(--size) / 16) solid var(--secondary-color);
+  border-top-color: var(--primary-color);
+  transform: scale(1.25);
+}
+@keyframes spin {
+  to {
+    transform: scale(1.25) rotate(360deg);
+  }
+}
