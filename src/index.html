@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Pull Request Reviewers</title>
+  </head>
+
+  <body>
+    <header class="container">
+      <h1>Pull Request Reviewers</h1>
+    </header>
+    <main class="container">
+      <form id="pull-request-form">
+        <input
+          id="pull-request-url"
+          type="text"
+          placeholder="Enter the full pull request url here"
+        />
+        <button>Go!</button>
+        <div id="pull-request-url-messages"></div>
+      </form>
+      <div id="pull-request-info"></div>
+      <ul id="user-list"></ul>
+      <div id="loader" class="lds-css ng-scope hide">
+        <div class="lds-spinner" style="width:100%;height:100%">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
