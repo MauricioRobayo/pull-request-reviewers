@@ -102,7 +102,7 @@ async function getPullRequestData(event) {
     const pullRequest = await fetchGithubApi(pullRequestPath)
     renderPullRequestInfo(pullRequest)
     if (pullRequest.state === 'open') {
-      const comments = await fetchGithubApi(pullRequest.comments_url)
+      const comments = await fetchGithubApi(pullRequest.review_comments_url)
       const uniqueUsersUrls = [
         ...new Set(
           comments
