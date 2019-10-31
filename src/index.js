@@ -60,10 +60,12 @@ function renderUsers(users) {
   } else {
     title.textContent = 'Reviewers:'
     users.forEach(user => {
-      const li = createElement('li')
-      const { avatarUrl, login, name } = createUser(user)
-      li.append(avatarUrl, login, name)
-      fragment.appendChild(li)
+      if (user.name) {
+        const li = createElement('li')
+        const { avatarUrl, login, name } = createUser(user)
+        li.append(avatarUrl, login, name)
+        fragment.appendChild(li)
+      }
     })
     const ul = document.querySelector('#user-list')
     ul.before(title)
@@ -101,8 +103,15 @@ async function getPullRequestData(event) {
     renderPullRequestInfo(pullRequest)
     if (pullRequest.state === 'open') {
       const comments = await fetchGithubApi(pullRequest.comments_url)
+      const uniqueUsersUrls = [
+        ...new Set(
+          comments
+            .filter(comment => comment.user.login !== pullRequest.user.login)
+            .map(comment => comment.user.url)
+        ),
+      ]
       const users = await Promise.all(
-        comments.map(comment => fetchGithubApi(comment.user.url))
+        uniqueUsersUrls.map(uniqueUserUrl => fetchGithubApi(uniqueUserUrl))
       )
       renderUsers(users)
       document.querySelector('#loader').classList.add('hide')
