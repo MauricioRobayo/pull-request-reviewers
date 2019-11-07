@@ -1,4 +1,5 @@
 import './style.scss'
+import fetchGithubApi from './js/github-fetch'
 
 function createElement(type, options = {}) {
   const element = document.createElement(type)
@@ -73,24 +74,12 @@ function renderUsers(users) {
   }
 }
 
-async function fetchGithubApi(endpoint) {
-  const githubApiUrl = 'https://api.github.com'
-  const response = await fetch(
-    endpoint.startsWith(githubApiUrl) ? endpoint : `${githubApiUrl}${endpoint}`,
-    {
-      headers: { Accept: 'application/vnd.github.v3+json' },
-    }
-  )
-  const data = await response.json()
-  return data
-}
-
 async function getPullRequestData(event) {
   event.preventDefault()
   document.querySelector('#pull-request-url-messages').textContent = ''
   document.querySelector('#user-list').innerHTML = ''
   document.querySelector('#pull-request-info').innerHTML = ''
-  document.querySelector('#loader').classList.remove('hide')
+  document.querySelector('#loader-container').classList.remove('hide')
   try {
     const pullRequestUrl = new URL(
       document.querySelector('#pull-request-url').value
@@ -101,31 +90,31 @@ async function getPullRequestData(event) {
     )}`
     const pullRequest = await fetchGithubApi(pullRequestPath)
     renderPullRequestInfo(pullRequest)
-    if (pullRequest.state === 'open') {
-      const allComments = await Promise.all([
-        fetchGithubApi(pullRequest.review_comments_url),
-        fetchGithubApi(pullRequest.comments_url),
-      ])
+    // if (pullRequest.state === 'open') {
+    const allComments = await Promise.all([
+      fetchGithubApi(pullRequest.review_comments_url),
+      fetchGithubApi(pullRequest.comments_url),
+    ])
 
-      const uniqueUsersUrls = [
-        ...new Set(
-          allComments
-            .flat()
-            .filter(comment => comment.user.login !== pullRequest.user.login)
-            .map(comment => comment.user.url)
-        ),
-      ]
-      const users = await Promise.all(
-        uniqueUsersUrls.map(uniqueUserUrl => fetchGithubApi(uniqueUserUrl))
-      )
-      renderUsers(users)
-      document.querySelector('#loader').classList.add('hide')
-    } else {
-      document.querySelector('#pull-request-url-messages').textContent =
-        'The pull request is already closed!'
-    }
+    const uniqueUsersUrls = [
+      ...new Set(
+        allComments
+          .flat()
+          .filter(comment => comment.user.login !== pullRequest.user.login)
+          .map(comment => comment.user.url)
+      ),
+    ]
+    const users = await Promise.all(
+      uniqueUsersUrls.map(uniqueUserUrl => fetchGithubApi(uniqueUserUrl))
+    )
+    renderUsers(users)
+    document.querySelector('#loader-container').classList.add('hide')
+    // } else {
+    //   document.querySelector('#pull-request-url-messages').textContent =
+    //     'The pull request is already closed!'
+    // }
   } catch (e) {
-    document.querySelector('#loader').classList.add('hide')
+    document.querySelector('#loader-container').classList.add('hide')
     document.querySelector('#pull-request-url-messages').textContent = e
   }
 }
