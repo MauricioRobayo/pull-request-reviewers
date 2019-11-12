@@ -1,5 +1,5 @@
 import './style.scss'
-import fetchGithubApi from './js/github-fetch'
+import githubFetch from './js/github-fetch'
 
 function createElement(type, options = {}) {
   const element = document.createElement(type)
@@ -33,18 +33,6 @@ function createUser(user) {
 
 function renderPullRequestInfo(pullRequest) {
   const { login } = createUser(pullRequest.user)
-  // const body = createElement('p', {
-  //   id: 'body',
-  //   textContent: pullRequest.body,
-  // })
-  // const createdAt = createElement('div', {
-  //   id: 'created-at',
-  //   textContent: pullRequest.created_at,
-  // })
-  // const updatedAt = createElement('div', {
-  //   id: 'updated-at',
-  //   textContent: pullRequest.updated_at,
-  // })
   const title = createElement('a', {
     id: 'title',
     href: pullRequest.html_url,
@@ -86,7 +74,7 @@ function handleErrors(message) {
   document.querySelector('#pull-request-url-messages').textContent = message
 }
 
-async function getPullRequestData(event) {
+async function onsubmit(event) {
   event.preventDefault()
 
   const pullRequestUrl = document.querySelector('#pull-request-url').value
@@ -103,12 +91,11 @@ async function getPullRequestData(event) {
       /\/pull\//,
       '/pulls/'
     )}`
-    const pullRequest = await fetchGithubApi(pullRequestPath)
+    const pullRequest = await githubFetch(pullRequestPath)
     renderPullRequestInfo(pullRequest)
-    // if (pullRequest.state === 'open') {
     const allComments = await Promise.all([
-      fetchGithubApi(pullRequest.review_comments_url),
-      fetchGithubApi(pullRequest.comments_url),
+      githubFetch(pullRequest.review_comments_url),
+      githubFetch(pullRequest.comments_url),
     ])
 
     const uniqueUsersUrls = [
@@ -120,14 +107,10 @@ async function getPullRequestData(event) {
       ),
     ]
     const users = await Promise.all(
-      uniqueUsersUrls.map(uniqueUserUrl => fetchGithubApi(uniqueUserUrl))
+      uniqueUsersUrls.map(uniqueUserUrl => githubFetch(uniqueUserUrl))
     )
     renderUsers(users)
     document.querySelector('#loader-container').classList.add('hide')
-    // } else {
-    //   document.querySelector('#pull-request-url-messages').textContent =
-    //     'The pull request is already closed!'
-    // }
   } catch (e) {
     handleErrors(e)
   }
@@ -135,4 +118,4 @@ async function getPullRequestData(event) {
 
 document
   .querySelector('#pull-request-form')
-  .addEventListener('submit', getPullRequestData)
+  .addEventListener('submit', onsubmit)

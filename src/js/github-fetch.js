@@ -1,6 +1,6 @@
 const GITHUB_API_URLL = 'https://api.github.com'
 
-async function fetchGithubApi(endpoint) {
+async function githubFetch(endpoint) {
   const response = await fetch(
     endpoint.startsWith(GITHUB_API_URLL)
       ? endpoint
@@ -12,4 +12,4 @@ async function fetchGithubApi(endpoint) {
   return response.json()
 }
 
-export default fetchGithubApi
+export default githubFetch
