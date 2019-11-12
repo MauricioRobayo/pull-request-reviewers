@@ -74,17 +74,32 @@ function renderUsers(users) {
   }
 }
 
+function validatePullRequestUrl(pullRequestUrl) {
+  const githubPullRequestPattern = RegExp(
+    /^https:\/\/github.com\/[\w-_.+]+\/[\w-_.+]+\/pull\/\d+\/?$/
+  )
+  return githubPullRequestPattern.test(pullRequestUrl)
+}
+
+function handleErrors(message) {
+  document.querySelector('#loader-container').classList.add('hide')
+  document.querySelector('#pull-request-url-messages').textContent = message
+}
+
 async function getPullRequestData(event) {
   event.preventDefault()
+
+  const pullRequestUrl = document.querySelector('#pull-request-url').value
+
+  validatePullRequestUrl(pullRequestUrl)
+
   document.querySelector('#pull-request-url-messages').textContent = ''
   document.querySelector('#user-list').innerHTML = ''
   document.querySelector('#pull-request-info').innerHTML = ''
   document.querySelector('#loader-container').classList.remove('hide')
   try {
-    const pullRequestUrl = new URL(
-      document.querySelector('#pull-request-url').value
-    )
-    const pullRequestPath = `/repos${pullRequestUrl.pathname.replace(
+    const pullRequestUrlObject = new URL(pullRequestUrl)
+    const pullRequestPath = `/repos${pullRequestUrlObject.pathname.replace(
       /\/pull\//,
       '/pulls/'
     )}`
@@ -114,8 +129,7 @@ async function getPullRequestData(event) {
     //     'The pull request is already closed!'
     // }
   } catch (e) {
-    document.querySelector('#loader-container').classList.add('hide')
-    document.querySelector('#pull-request-url-messages').textContent = e
+    handleErrors(e)
   }
 }
 
