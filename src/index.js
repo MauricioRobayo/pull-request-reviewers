@@ -1,5 +1,6 @@
 import './style.scss'
 import GitHubPR from './js/github-pr'
+import Reviewer from './js/reviewer'
 
 async function onsubmit(event) {
   event.preventDefault()
@@ -9,8 +10,11 @@ async function onsubmit(event) {
     pr.fetchInfo(),
     pr.fetchReviewers(),
   ])
-  // eslint-disable-next-line no-console
-  console.log(info, reviewers)
+  const reviewersList = document.querySelector('#reviewers-list')
+  reviewers.forEach(reviewer => {
+    const r = new Reviewer(reviewer)
+    r.render({ parent: reviewersList, tagName: 'li' })
+  })
 }
 
 document
