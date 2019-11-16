@@ -5,11 +5,16 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "Mauricio Robayo <rfmajo@gmail.com> (www.mauriciorobayo.com)",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-jest": "^24.9.0",
     "css-loader": "^3.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -17,6 +22,7 @@
     "eslint-plugin-import": "^2.18.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.9",
+    "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
     "node-sass": "^4.13.0",
     "prettier": "^1.18.2",
@@ -41,8 +47,5 @@
     "trailingComma": "es5",
     "semi": false,
     "singleQuote": true
-  },
-  "dependencies": {
-    "@octokit/rest": "^16.34.1"
   }
 }
