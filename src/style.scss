@@ -1,5 +1,100 @@
 @import 'scss/loader';
 
+html {
+  box-sizing: border-box;
+  font-size: 18px;
+  --main-dark: #6f23ff;
+  --call-to-action: #ffd540;
+  --border-radius: 8px;
+  --max-width: 520px;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+body,
+h1,
+h2 {
+  padding: 0;
+  margin: 0;
+}
+header {
+  background-color: var(--main-dark);
+  color: white;
+}
+
+header {
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    padding: 0 0.5rem;
+    svg {
+      fill: white;
+    }
+    h1 {
+      font-size: 1rem;
+    }
+  }
+  form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 3rem);
+    justify-content: center;
+    margin: 0 auto;
+    max-width: var(--max-width);
+    padding: 0 0.5rem;
+    text-align: center;
+    transition: height 0.5s;
+    > * {
+      margin: 0.5rem 0;
+    }
+    input {
+      padding: 0.75rem;
+      border-radius: var(--border-radius);
+      border: none;
+      width: 100%;
+    }
+    button {
+      background-color: var(--call-to-action);
+      border: none;
+      padding: 0.75rem 1rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-radius: var(--border-radius);
+    }
+  }
+}
+
+#info {
+  background-color: #f2f2f2;
+  padding: 0.5rem;
+  .repo-info {
+    font-size: 0.85rem;
+  }
+  .pr-info {
+    display: flex;
+    align-items: center;
+  }
+  h2 {
+    font-size: 1rem;
+  }
+  a {
+    color: #444;
+    text-decoration: none;
+  }
+  > * {
+    max-width: var(--max-width);
+  }
+}
+
 .hide {
   display: none;
 }

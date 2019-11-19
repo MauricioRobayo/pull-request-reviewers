@@ -47,5 +47,8 @@
     "trailingComma": "es5",
     "semi": false,
     "singleQuote": true
+  },
+  "dependencies": {
+    "@primer/octicons": "^9.2.0"
   }
 }
