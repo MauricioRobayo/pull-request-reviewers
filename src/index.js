@@ -44,13 +44,13 @@ async function fetchPR() {
 
 async function onsubmit(event) {
   event.preventDefault()
+  event.target.style.height = '270px'
   const [info, reviewers] = await fetchPR()
   const repoInfoHTML = buildRepoInfoHTML(info)
   const prInfoHTML = buildPRInfoHTML(info)
   const reviewersHTML = buildReviewersHTML(reviewers)
-  document
-    .querySelector('#content')
-    .append(repoInfoHTML, prInfoHTML, reviewersHTML)
+  document.querySelector('#info').append(repoInfoHTML, prInfoHTML)
+  document.querySelector('#reviewers').append(reviewersHTML)
 }
 
 document
