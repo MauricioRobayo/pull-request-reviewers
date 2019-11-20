@@ -24,13 +24,10 @@ export default class User {
   }
 
   html({ tagName = 'div', classList = ['user'], children = [] }) {
-    const avatar = this.htmlUrl.cloneNode()
-    avatar.append(this.avatar)
-    const login = this.htmlUrl.cloneNode()
-    login.append(this.login)
+    this.htmlUrl.append(this.avatar, this.login)
     const wrapper = create.element(tagName, {
       classList,
-      children: [avatar, login, ...children],
+      children: [this.htmlUrl, ...children],
     })
     return wrapper
   }
