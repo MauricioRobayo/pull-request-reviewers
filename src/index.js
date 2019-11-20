@@ -30,6 +30,7 @@ function buildRepoInfoHTML(info) {
 
 function buildReviewersHTML(reviewers) {
   return create.element('ul', {
+    id: 'reviewers',
     classList: ['reviewers'],
     children: reviewers.map(reviewer =>
       new Reviewer(reviewer).html({ tagName: 'li' })
@@ -37,20 +38,63 @@ function buildReviewersHTML(reviewers) {
   })
 }
 
-async function fetchPR() {
-  const pr = new GitHubPR(document.querySelector('#pull-request-url').value)
+function buildInfoHTML(info) {
+  const repoInfoHTML = buildRepoInfoHTML(info)
+  const prInfoHTML = buildPRInfoHTML(info)
+  return create.element('section', {
+    id: 'info',
+    children: [repoInfoHTML, prInfoHTML],
+  })
+}
+
+function preRender() {
+  const infoContainers = document.querySelector('#info')
+  const reviewersContainer = document.querySelector('#reviewers')
+  if (infoContainers) {
+    infoContainers.remove()
+  }
+  if (reviewersContainer) {
+    reviewersContainer.remove()
+  }
+  document.querySelector('#error-msgs').innerHTML = ''
+  document.querySelector('#pull-request-form').style.height = '270px'
+  document.querySelector('#loader-container').classList.remove('hide')
+}
+
+function postRender() {
+  document.querySelector('#loader-container').classList.add('hide')
+}
+
+function renderError(error) {
+  const errorMsg = create.element('div', {
+    classList: ['error-msg'],
+    textContent: error,
+  })
+  document.querySelector('#error-msgs').append(errorMsg)
+}
+
+async function fetchPR(prUrl) {
+  const pr = new GitHubPR(prUrl)
   return Promise.all([pr.fetchInfo(), pr.fetchReviewers()])
 }
 
 async function onsubmit(event) {
   event.preventDefault()
-  event.target.style.height = '270px'
-  const [info, reviewers] = await fetchPR()
-  const repoInfoHTML = buildRepoInfoHTML(info)
-  const prInfoHTML = buildPRInfoHTML(info)
-  const reviewersHTML = buildReviewersHTML(reviewers)
-  document.querySelector('#info').append(repoInfoHTML, prInfoHTML)
-  document.querySelector('#reviewers').append(reviewersHTML)
+  const prUrl = document.querySelector('#pull-request-url').value
+  if (!GitHubPR.isValidPRUrl(prUrl)) {
+    renderError('Not a valid GitHub Pull request url!')
+    return
+  }
+  preRender()
+  try {
+    const [info, reviewers] = await fetchPR(prUrl)
+    const infoHTML = buildInfoHTML(info)
+    const reviewersHTML = buildReviewersHTML(reviewers)
+    document.querySelector('main').append(infoHTML, reviewersHTML)
+  } catch (e) {
+    renderError(e)
+  }
+  postRender()
 }
 
 document

@@ -10,16 +10,19 @@ export default class Reviewer extends User {
     })
   }
 
+  wrapWithLink(element, classSuffix = 'link') {
+    const link = this.htmlUrl.cloneNode()
+    link.append(element)
+    link.classList.add(`${element.classList[0]}-${classSuffix}`)
+    return link
+  }
+
   html({ tagName = 'div', classList = ['user'], children = [] }) {
-    this.avatarLink = this.htmlUrl.cloneNode()
-    this.avatarLink.append(this.avatar)
-    this.avatarLink.classList.add('avatar-link')
-    this.loginLink = this.htmlUrl.cloneNode()
-    this.loginLink.append(this.login)
-    this.loginLink.classList.add('login-link')
+    const avatarLink = this.wrapWithLink(this.avatar)
+    const loginLink = this.wrapWithLink(this.login)
     const wrapper = create.element(tagName, {
       classList,
-      children: [this.avatarLink, this.name, this.loginLink, ...children],
+      children: [avatarLink, this.name, loginLink, ...children],
     })
     return wrapper
   }

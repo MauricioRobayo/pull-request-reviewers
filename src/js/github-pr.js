@@ -9,7 +9,7 @@ export default class GitHubPR {
 
   static validatePRUrl(prUrl) {
     if (!GitHubPR.isValidPRUrl(prUrl)) {
-      throw new Error('Not a valid GitHub Pull Request Url.')
+      throw new Error('Not a valid GitHub pull request url.')
     }
     return prUrl
   }
@@ -38,7 +38,12 @@ export default class GitHubPR {
       },
     }
     const url = endpoint.startsWith(apiUrl) ? endpoint : `${apiUrl}${endpoint}`
-    return (await fetch(url, apiOptions)).json()
+    const response = await fetch(url, apiOptions)
+    const json = await response.json()
+    if (!response.ok) {
+      throw new Error(json.message)
+    }
+    return json
   }
 
   fetchInfo() {

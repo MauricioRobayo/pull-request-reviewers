@@ -19,6 +19,7 @@ export default class User {
 
   avatar({ size = 64 } = {}) {
     return create.element('img', {
+      classList: ['user-avatar'],
       src: `${this.reviewer.avatar_url}&s=${size}`,
     })
   }
