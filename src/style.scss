@@ -5,13 +5,13 @@ html {
   font-size: 18px;
   --main-dark: rgb(111, 35, 255);
   --main-light: rgb(192, 158, 255);
-  --main-lighter: rgba(192, 158, 255, 0.25);
+  --main-lighter: rgb(241, 235, 252);
   --dusk: #3e396b;
   --link: #41d3bd;
   --success: #2cbe4e;
   --warning: #cb2431;
   --call-to-action: #ffd540;
-  --border-radius: 8px;
+  --border-radius: 4px;
   --max-width: 520px;
 }
 *,
@@ -63,7 +63,9 @@ header {
     padding: 0 0.5rem;
     text-align: center;
     transition: height 0.5s;
-    > * {
+    > label,
+    input,
+    button {
       margin: 0.5rem 0;
     }
     input {
@@ -79,8 +81,22 @@ header {
       text-transform: uppercase;
       font-weight: bold;
       border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: filter 0.5s;
+      &:hover {
+        filter: brightness(1.15);
+      }
     }
   }
+}
+
+.error-msg {
+  color: var(--warning);
+  background-color: var(--main-lighter);
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid currentColor;
 }
 
 #info {
@@ -149,7 +165,7 @@ header {
     p {
       margin: 0;
     }
-    .avatar-link {
+    .user-avatar-link {
       grid-area: avatar;
       img {
         width: 48px;
@@ -160,7 +176,7 @@ header {
       grid-area: username;
       font-weight: bold;
     }
-    .login-link {
+    .user-login-link {
       text-decoration: none;
       grid-area: userlogin;
       font-size: 0.85rem;
