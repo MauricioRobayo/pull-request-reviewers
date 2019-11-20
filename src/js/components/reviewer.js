@@ -6,7 +6,7 @@ export default class Reviewer extends User {
     super(reviewer)
     this.name = create.element('p', {
       classList: ['user-name'],
-      textContent: this.reviewer.name,
+      textContent: this.reviewer.name || this.reviewer.login,
     })
   }
 
