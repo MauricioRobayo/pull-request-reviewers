@@ -3,7 +3,10 @@
 html {
   box-sizing: border-box;
   font-size: 18px;
-  --main-dark: #6f23ff;
+  --main-dark: rgb(111, 35, 255);
+  --main-light: rgb(192, 158, 255);
+  --main-lighter: rgba(192, 158, 255, 0.25);
+  --dusk: #3e396b;
   --call-to-action: #ffd540;
   --border-radius: 8px;
   --max-width: 520px;
@@ -16,10 +19,12 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  color: var(--dusk);
 }
 body,
 h1,
-h2 {
+h2,
+ul {
   padding: 0;
   margin: 0;
 }
@@ -46,7 +51,7 @@ header {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 3rem);
+    // height: calc(100vh - 3rem);
     justify-content: center;
     margin: 0 auto;
     max-width: var(--max-width);
@@ -87,11 +92,57 @@ header {
     font-size: 1rem;
   }
   a {
-    color: #444;
+    color: var(--dusk);
     text-decoration: none;
   }
   > * {
     max-width: var(--max-width);
+  }
+}
+#info,
+#reviewers {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.reviewers {
+  list-style: none;
+  .user {
+    border: 1px solid var(--main-light);
+    border-radius: var(--border-radius);
+    margin: 0.5rem;
+    padding: 0.5rem;
+    transition: background-color 0.5s;
+    a {
+      color: var(--dusk);
+      text-decoration: none;
+      display: grid;
+      grid-column-gap: 1rem;
+      align-items: center;
+      grid-template-columns: 48px 1fr;
+      grid-template-areas:
+        'avatar username'
+        'avatar userlogin';
+      img {
+        grid-area: avatar;
+        width: 48px;
+      }
+      .user-name {
+        margin: 0;
+        grid-area: username;
+        font-weight: bold;
+      }
+      .user-login {
+        margin: 0;
+        grid-area: userlogin;
+        font-size: 0.85rem;
+        &:before {
+          content: '@';
+        }
+      }
+    }
+  }
+  .user:hover {
+    background-color: var(--main-lighter);
   }
 }
 
