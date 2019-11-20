@@ -11,14 +11,15 @@ export default class Reviewer extends User {
   }
 
   html({ tagName = 'div', classList = ['user'], children = [] }) {
-    this.name = create.element('p', {
-      classList: ['user-name'],
-      textContent: this.reviewer.name,
-    })
-    const wrapper = super.html({
-      tagName,
+    this.avatarLink = this.htmlUrl.cloneNode()
+    this.avatarLink.append(this.avatar)
+    this.avatarLink.classList.add('avatar-link')
+    this.loginLink = this.htmlUrl.cloneNode()
+    this.loginLink.append(this.login)
+    this.loginLink.classList.add('login-link')
+    const wrapper = create.element(tagName, {
       classList,
-      children: [...children, this.name],
+      children: [this.avatarLink, this.name, this.loginLink, ...children],
     })
     return wrapper
   }
