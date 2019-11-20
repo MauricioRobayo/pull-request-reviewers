@@ -73,9 +73,26 @@ function renderError(error) {
   document.querySelector('#error-msgs').append(errorMsg)
 }
 
+function renderInfo({ info, reviewers }) {
+  const infoHTML = buildInfoHTML(info)
+  const reviewersHTML = buildReviewersHTML(reviewers)
+  document.querySelector('main').append(infoHTML, reviewersHTML)
+}
+
 async function fetchPR(prUrl) {
   const pr = new GitHubPR(prUrl)
   return Promise.all([pr.fetchInfo(), pr.fetchReviewers()])
+}
+
+async function render(prUrl) {
+  preRender()
+  try {
+    const prInfo = await fetchPR(prUrl)
+    renderInfo(prInfo)
+  } catch (e) {
+    renderError(e)
+  }
+  postRender()
 }
 
 async function onsubmit(event) {
@@ -85,16 +102,7 @@ async function onsubmit(event) {
     renderError('Not a valid GitHub Pull request url!')
     return
   }
-  preRender()
-  try {
-    const [info, reviewers] = await fetchPR(prUrl)
-    const infoHTML = buildInfoHTML(info)
-    const reviewersHTML = buildReviewersHTML(reviewers)
-    document.querySelector('main').append(infoHTML, reviewersHTML)
-  } catch (e) {
-    renderError(e)
-  }
-  postRender()
+  render(prUrl)
 }
 
 document
