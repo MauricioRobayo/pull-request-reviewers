@@ -3,14 +3,16 @@
 html {
   box-sizing: border-box;
   font-size: 18px;
-  --main-dark: rgb(111, 35, 255);
-  --main-light: rgb(192, 158, 255);
-  --main-lighter: rgb(241, 235, 252);
+  --main-dark: hsl(261, 100%, 57%);
+  --main-light: hsl(261, 100%, 81%);
+  --main-lighter: hsl(261, 100%, 95%);
   --dusk: #3e396b;
   --link: #41d3bd;
   --success: #2cbe4e;
   --warning: #cb2431;
-  --call-to-action: #ffd540;
+  --cta-lightness-normal: 63%;
+  --lighten: 10%;
+  --call-to-action: hsl(47, 100%, 63%);
   --border-radius: 4px;
   --max-width: 520px;
 }
@@ -82,10 +84,7 @@ header {
       font-weight: bold;
       border-radius: var(--border-radius);
       cursor: pointer;
-      transition: filter 0.5s;
-      &:hover {
-        filter: brightness(1.15);
-      }
+      transition: background-color 0.5s;
     }
   }
 }
