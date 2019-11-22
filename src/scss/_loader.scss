@@ -1,10 +1,16 @@
 #loader-container {
+  &.hide {
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
   margin: 2rem;
+  height: 36px;
+  overflow: hidden;
+  transition: all 0.25s step-end;
   #loader {
-    --primary-color: #6f23ff;
-    --secondary-color: #cdb2ff;
-    --size: 32px;
-    --speed: 0.75s;
+    --primary-color: var(--main-dark);
+    --secondary-color: var(--main-light);
     display: grid;
     justify-items: center;
     align-items: center;
@@ -12,19 +18,21 @@
   #loader > * {
     grid-area: 1/1/-1/-1;
     border-radius: 50%;
-    width: var(--size);
-    height: var(--size);
+    width: 36px;
+    height: 36px;
+  }
+  #loader > img {
+    padding: 4px;
   }
   #loader > div {
     box-sizing: border-box;
-    animation: var(--speed) spin linear infinite;
-    border: calc(var(--size) / 16) solid var(--secondary-color);
+    animation: 0.75s spin linear infinite;
+    border: 2px solid var(--secondary-color);
     border-top-color: var(--primary-color);
-    transform: scale(1.25);
   }
   @keyframes spin {
     to {
-      transform: scale(1.25) rotate(360deg);
+      transform: rotate(360deg);
     }
   }
 }
