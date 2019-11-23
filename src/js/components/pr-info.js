@@ -1,4 +1,3 @@
-import octicons from '@primer/octicons'
 import * as create from '../element-creator'
 import Info from './info'
 
@@ -7,7 +6,8 @@ export default class PRInfo extends Info {
     super({ title, url })
     this.icon = create.element('span', {
       classList: ['icon'],
-      innerHTML: octicons['git-pull-request'].toSVG(),
+      innerHTML:
+        '<svg width="12" height="16" aria-hidden="true"><use href="#github-pr"></use></svg>',
     })
     this.state = create.element('div', {
       textContent: state,
