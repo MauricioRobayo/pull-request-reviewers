@@ -1,6 +1,6 @@
 {
   "name": "pull-request-reviewers",
-  "version": "1.0.0",
+  "version": "0.0.0-semantic-release",
   "description": "Simple interface to get a pull request comments authors",
   "private": true,
   "scripts": {
