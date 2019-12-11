@@ -70,7 +70,12 @@ function renderError(error) {
     classList: ['error-msg'],
     textContent: error,
   })
-  document.querySelector('#error-msgs').append(errorMsg)
+  const errorMsgs = document.querySelector('#error-msgs')
+  if (errorMsgs.childElementCount === 0) {
+    errorMsgs.append(errorMsg)
+  } else {
+    errorMsgs.replaceChild(errorMsg, errorMsgs.firstChild)
+  }
 }
 
 function renderInfo([info, reviewers]) {
