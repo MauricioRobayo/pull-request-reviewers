@@ -91,11 +91,13 @@ async function fetchPR(prUrl) {
 
 async function onsubmit(event) {
   event.preventDefault()
-  const prUrl = document.querySelector('#pull-request-url').value
-  if (!GitHubPR.isValidPRUrl(prUrl)) {
+  const input = document.querySelector('#pull-request-url')
+  const prUrl = GitHubPR.validatePRUrl(input.value)
+  if (!prUrl) {
     renderError('Not a valid GitHub Pull request url!')
     return
   }
+  input.value = prUrl
   preRender()
   try {
     renderInfo(await fetchPR(prUrl))

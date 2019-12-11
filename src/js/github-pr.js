@@ -2,23 +2,17 @@ const apiUrl = 'https://api.github.com'
 
 export default class GitHubPR {
   constructor(prUrl) {
-    GitHubPR.validatePRUrl(prUrl)
-    this.prUrl = new URL(prUrl)
+    this.prUrl = new URL(GitHubPR.validatePRUrl(prUrl))
     this.prApiUrl = GitHubPR.prUrlToApiEndpoint(prUrl)
   }
 
   static validatePRUrl(prUrl) {
-    if (!GitHubPR.isValidPRUrl(prUrl)) {
-      throw new Error('Not a valid GitHub pull request url.')
+    const re = /(^https:\/\/github.com\/[\w-_.+]+\/[\w-_.+]+\/pull\/\d+).*$/
+    const match = re.exec(prUrl)
+    if (match) {
+      return match[1]
     }
-    return prUrl
-  }
-
-  static isValidPRUrl(prUrl) {
-    const githubPullRequestPattern = RegExp(
-      /^https:\/\/github.com\/[\w-_.+]+\/[\w-_.+]+\/pull\/\d+\/?$/
-    )
-    return githubPullRequestPattern.test(prUrl)
+    return ''
   }
 
   static prUrlToApiEndpoint(prUrl) {
