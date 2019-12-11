@@ -7,7 +7,7 @@ export default class GitHubPR {
   }
 
   static validatePRUrl(prUrl) {
-    const re = /(^https:\/\/github.com\/[\w-_.+]+\/[\w-_.+]+\/pull\/\d+).*$/
+    const re = /(^https:\/\/github\.com\/[\w\-_.+]+\/[\w\-_.+]+\/pull\/\d+).*$/
     const match = re.exec(prUrl)
     if (match) {
       return match[1]
