@@ -29,6 +29,8 @@
           id="pull-request-url"
           type="url"
           placeholder="Enter the full pull request url here"
+          pattern="https://github\.com/[\w\-_.+]+/[\w\-_.+]+/pull/\d+.*"
+          title="Enter a valid GitHub pull request url"
         />
         <button type="submit">Get reviewers</button>
         <div id="error-msgs"></div>
