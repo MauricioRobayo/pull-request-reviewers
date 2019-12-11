@@ -89,6 +89,15 @@ header {
   }
 }
 
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .error-msg {
   color: var(--warning);
   background-color: var(--main-lighter);
@@ -96,6 +105,8 @@ header {
   padding: 0.5rem;
   margin: 0.5rem;
   border: 1px solid currentColor;
+  box-shadow: none;
+  animation: appear .5s ease forwards;
 }
 
 #info {
