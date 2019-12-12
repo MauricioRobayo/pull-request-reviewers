@@ -27,9 +27,12 @@
         >
         <input
           id="pull-request-url"
-          type="text"
+          type="url"
           placeholder="Enter the full pull request url here"
+          pattern="https://github\.com/[\w\-_.+]+/[\w\-_.+]+/pull/\d+.*"
+          title="Enter a valid GitHub pull request url"
         />
+        <div id="example"></div>
         <button type="submit">Get reviewers</button>
         <div id="error-msgs"></div>
       </form>
@@ -59,5 +62,5 @@
         ></path>
       </symbol>
     </svg>
-  <script type="text/javascript" src="main.c26ff35fcd8513202075.js"></script></body>
+  <script type="text/javascript" src="main.24340b413bf3588170f2.js"></script></body>
 </html>
