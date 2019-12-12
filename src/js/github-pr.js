@@ -16,8 +16,7 @@ export default class GitHubPR {
   }
 
   static prUrlToApiEndpoint(prUrl) {
-    GitHubPR.validatePRUrl(prUrl)
-    const { pathname } = new URL(prUrl)
+    const { pathname } = new URL(GitHubPR.validatePRUrl(prUrl))
     const prApiUrl = new URL(
       `/repos${pathname.replace('/pull/', '/pulls/')}`,
       apiUrl
