@@ -9,7 +9,7 @@ export default class PRInfo extends Info {
       innerHTML:
         '<svg width="12" height="16" aria-hidden="true"><use href="#github-pr"></use></svg>',
     })
-    this.state = create.element('div', {
+    this.state = create.element('span', {
       textContent: state,
       classList: ['pr-state', state],
     })
@@ -20,9 +20,10 @@ export default class PRInfo extends Info {
   }
 
   html() {
+    this.title.append(this.state)
     const wrapper = create.element('div', {
       classList: ['pr-info'],
-      children: [this.icon, this.title, this.state],
+      children: [this.icon, this.title],
     })
     return wrapper
   }
