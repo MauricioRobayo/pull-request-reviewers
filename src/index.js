@@ -57,7 +57,9 @@ function preRender() {
     reviewersContainer.remove()
   }
   document.querySelector('#error-msgs').innerHTML = ''
-  document.querySelector('#pull-request-form').style.height = '270px'
+  document
+    .querySelector('.pull-request-form-container')
+    .classList.add('collapse')
   document.querySelector('#loader-container').classList.remove('hide')
 }
 
