@@ -20,24 +20,26 @@
           </svg>
         </a>
       </nav>
-      <form id="pull-request-form">
-        <label for="pull-request-url"
-          >Enter a GitHub pull request URL to get the list of the people who
-          review it.</label
-        >
-        <input
-          id="pull-request-url"
-          type="url"
-          placeholder="Enter the full pull request url here"
-          pattern="https://github\.com/[\w\-_.+]+/[\w\-_.+]+/pull/\d+.*"
-          title="Enter a valid GitHub pull request url"
-        />
-        <div id="example"></div>
-        <button type="submit">Get reviewers</button>
-        <div id="error-msgs"></div>
-      </form>
     </header>
     <main>
+      <section class="pull-request-form-container">
+        <form id="pull-request-form">
+          <label for="pull-request-url"
+            >Enter a GitHub pull request URL to get the list of the people who
+            review it.
+          </label>
+          <input
+            id="pull-request-url"
+            type="url"
+            placeholder="Pull request url here"
+            pattern="https://github\.com/[\w\-_.+]+/[\w\-_.+]+/pull/\d+.*"
+            title="Enter a valid GitHub pull request url"
+          />
+          <small id="example">Try: <a href="/#https://github.com/facebook/react/pull/17536">https://github.com/facebook/react/pull/17536</a></small>
+          <button type="submit">Get reviewers</button>
+          <div id="error-msgs"></div>
+        </form>
+      </section>
       <div id="loader-container" class="hide">
         <div id="loader">
           <img
@@ -62,5 +64,5 @@
         ></path>
       </symbol>
     </svg>
-  <script type="text/javascript" src="main.24340b413bf3588170f2.js"></script></body>
+  <script type="text/javascript" src="main.293e3c01af17117ac3af.js"></script></body>
 </html>
