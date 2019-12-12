@@ -11,10 +11,10 @@ html {
   --success: #2cbe4e;
   --warning: #cb2431;
   --cta-lightness-normal: 63%;
-  --lighten: 10%;
   --call-to-action: hsl(47, 100%, 63%);
   --border-radius: 4px;
   --max-width: 520px;
+  --header-height: 3rem;
 }
 *,
 *:before,
@@ -38,15 +38,12 @@ ul {
 header {
   background-color: var(--main-dark);
   color: white;
-}
-
-header {
+  height: var(--header-height);
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3rem;
-    padding: 0 1rem;
+    padding: 1rem;
     svg {
       fill: white;
     }
@@ -54,17 +51,27 @@ header {
       font-size: 1rem;
     }
   }
+}
+.pull-request-form-container {
+  background-color: var(--main-dark);
+  color: white;
+  min-height: calc(100vh - var(--header-height));
+  padding: 1rem 0 var(--header-height) 0;
+  display: flex;
+  transition: all 0.5s;
+  &.collapse {
+    padding: 2rem 0;
+    min-height: 270px;
+  }
   form {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 3rem);
     justify-content: center;
     margin: 0 auto;
     max-width: var(--max-width);
     padding: 0 0.5rem;
     text-align: center;
-    transition: height 0.5s;
     > label,
     input,
     button {
@@ -110,7 +117,7 @@ header {
 }
 
 #info {
-  background-color: #f2f2f2;
+  background-color: #e4e4e4;
   padding: 0.5rem 0;
   .repo-info {
     padding: 0 1rem;
