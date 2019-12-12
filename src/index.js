@@ -29,13 +29,22 @@ function buildRepoInfoHTML(info) {
 }
 
 function buildReviewersHTML(reviewers) {
-  return create.element('ul', {
+  const wrapper = create.element('section', {
+    classList: ['reviewers-wrapper'],
+  })
+  const reviewersTitle = create.element('h2', {
+    classList: ['reviewers-title'],
+    textContent: 'Reviewers:',
+  })
+  const reviewersList = create.element('ul', {
     id: 'reviewers',
     classList: ['reviewers'],
     children: reviewers.map(reviewer =>
       new Reviewer(reviewer).html({ tagName: 'li' })
     ),
   })
+  wrapper.append(reviewersTitle, reviewersList)
+  return wrapper
 }
 
 function buildInfoHTML(info) {

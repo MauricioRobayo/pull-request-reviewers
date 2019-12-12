@@ -119,7 +119,7 @@ header {
 }
 
 #info {
-  background-color: #e4e4e4;
+  background-color: #f2f2f2;
   padding: 0.5rem 0;
   .repo-info {
     padding: 0 1rem;
@@ -127,13 +127,14 @@ header {
     .info-title {
       font-size: 0.85rem;
       color: var(--link);
+      font-weight: bold;
     }
   }
   .pr-info {
     padding: 0 1rem;
     max-width: var(--max-width);
     display: flex;
-    align-items: center;
+    align-items: baseline;
     .info-title {
       margin: 0 0.25rem;
     }
@@ -162,11 +163,16 @@ header {
   margin: 0.25rem auto;
   max-width: var(--max-width);
 }
-.reviewers {
+.reviewers-wrapper {
   list-style: none;
   padding: 0.5rem;
   max-width: var(--max-width);
   margin: 0 auto;
+  h2.reviewers-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 1rem 0;
+  }
   .user {
     margin: 0.5rem auto;
     border: 1px solid var(--main-light);
