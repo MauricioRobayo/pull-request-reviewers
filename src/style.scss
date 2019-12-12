@@ -21,7 +21,6 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
 body {
   font-family: 'Open Sans', sans-serif;
   color: var(--dusk);
@@ -34,6 +33,9 @@ ul {
   margin: 0;
   font-size: 1rem;
   font-weight: normal;
+}
+a {
+  color: var(--link);
 }
 header {
   background-color: var(--main-dark);
