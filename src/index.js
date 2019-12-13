@@ -58,7 +58,7 @@ function buildInfoHTML(info) {
 
 function preRender() {
   const infoContainers = document.querySelector('#info')
-  const reviewersContainer = document.querySelector('#reviewers')
+  const reviewersContainer = document.querySelector('.reviewers-wrapper')
   if (infoContainers) {
     infoContainers.remove()
   }
