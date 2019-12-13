@@ -25,7 +25,8 @@
       <section class="pull-request-form-container">
         <form id="pull-request-form">
           <label for="pull-request-url"
-            >Enter a GitHub pull request URL to get the list of reviewers:
+            >Enter a GitHub pull request URL to get the list of reviewers
+            <small>For example: <a href="#https://github.com/facebook/react/pull/17536">https://github.com/facebook/react/pull/17536</a></small>
           </label>
           <input
             id="pull-request-url"
@@ -34,11 +35,11 @@
             pattern="https://github\.com/[\w\-_.+]+/[\w\-_.+]+/pull/\d+.*"
             title="Enter a valid GitHub pull request url"
           />
-          <small id="example">Try: <a href="#https://github.com/facebook/react/pull/17536">https://github.com/facebook/react/pull/17536</a></small>
           <button type="submit">Get reviewers</button>
           <div id="error-msgs"></div>
         </form>
       </section>
+      <section id="pr-content"></section>
       <div id="loader-container" class="hide">
         <div id="loader">
           <img

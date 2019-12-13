@@ -34,7 +34,8 @@ function buildReviewersHTML(reviewers) {
   })
   const reviewersTitle = create.element('h2', {
     classList: ['reviewers-title'],
-    textContent: 'Reviewers:',
+    textContent:
+      reviewers.length > 0 ? 'Reviewers:' : 'No reviewers found for this PR.',
   })
   const reviewersList = create.element('ul', {
     id: 'reviewers',
@@ -89,16 +90,16 @@ function renderError(error) {
   }
 }
 
-function renderInfo([info, reviewers]) {
-  document.querySelector('#pull-request-url').value = info.html_url
-  const infoHTML = buildInfoHTML(info)
-  const reviewersHTML = buildReviewersHTML(reviewers)
-  document.querySelector('main').append(infoHTML, reviewersHTML)
-}
-
-async function fetchPR(prUrl) {
+async function renderInfo(prUrl) {
+  document.querySelector('#pull-request-url').value = prUrl
   const pr = new GitHubPR(prUrl)
-  return Promise.all([pr.fetchInfo(), pr.fetchReviewers()])
+  // This should not be done in parallel (Promise.all) to avoid
+  // a request to get reviewers if fetching the info fails
+  const info = await pr.fetchInfo()
+  const reviewers = await pr.fetchReviewers()
+  document
+    .querySelector('#pr-content')
+    .append(buildInfoHTML(info), buildReviewersHTML(reviewers))
 }
 
 async function onsubmit(event) {
@@ -121,7 +122,7 @@ async function loadPR() {
   }
   preRender()
   try {
-    renderInfo(await fetchPR(prUrl))
+    await renderInfo(prUrl)
   } catch (e) {
     renderError(e)
   }
