@@ -70,10 +70,12 @@ function preRender() {
   document
     .querySelector('.pull-request-form-container')
     .classList.add('collapse')
+  document.querySelector('#pr-btn').setAttribute('hidden', true)
   document.querySelector('#loader-container').classList.remove('hide')
 }
 
 function postRender() {
+  document.querySelector('#pr-btn').removeAttribute('hidden')
   document.querySelector('#loader-container').classList.add('hide')
 }
 
@@ -91,7 +93,6 @@ function renderError(error) {
 }
 
 async function renderInfo({ info, reviewers }) {
-  document.querySelector('#pull-request-url').value = info.html_url
   document
     .querySelector('#pr-content')
     .append(buildInfoHTML(info), buildReviewersHTML(reviewers))
@@ -99,7 +100,15 @@ async function renderInfo({ info, reviewers }) {
 
 async function onsubmit(event) {
   event.preventDefault()
-  window.location.hash = document.querySelector('#pull-request-url').value
+  const prUrl = GitHubPR.validatePRUrl(
+    document.querySelector('#pull-request-url').value
+  )
+  if (!prUrl) {
+    renderError('Not a valid GitHub Pull request url!')
+    return
+  }
+  document.querySelector('#pull-request-url').value = prUrl
+  window.location.hash = prUrl
 }
 
 async function fetchPR(prUrl) {
