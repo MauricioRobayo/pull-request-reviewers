@@ -46,6 +46,10 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    a {
+      color: white;
+      text-decoration: none;
+    }
     svg {
       fill: white;
     }
