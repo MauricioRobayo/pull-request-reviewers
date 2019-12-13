@@ -90,13 +90,8 @@ function renderError(error) {
   }
 }
 
-async function renderInfo(prUrl) {
-  document.querySelector('#pull-request-url').value = prUrl
-  const pr = new GitHubPR(prUrl)
-  // This should not be done in parallel (Promise.all) to avoid
-  // a request to get reviewers if fetching the info fails
-  const info = await pr.fetchInfo()
-  const reviewers = await pr.fetchReviewers()
+async function renderInfo({ info, reviewers }) {
+  document.querySelector('#pull-request-url').value = info.html_url
   document
     .querySelector('#pr-content')
     .append(buildInfoHTML(info), buildReviewersHTML(reviewers))
@@ -107,9 +102,17 @@ async function onsubmit(event) {
   window.location.hash = document.querySelector('#pull-request-url').value
 }
 
-document
-  .querySelector('#pull-request-form')
-  .addEventListener('submit', onsubmit)
+async function fetchPR(prUrl) {
+  const pr = new GitHubPR(prUrl)
+  // Avoid doing these requests on parallel to avoid
+  // doing the latter one if the former fails.
+  const info = await pr.fetchInfo()
+  const reviewers = await pr.fetchReviewers()
+  return {
+    info,
+    reviewers,
+  }
+}
 
 async function loadPR() {
   if (window.location.hash === '') {
@@ -122,12 +125,16 @@ async function loadPR() {
   }
   preRender()
   try {
-    await renderInfo(prUrl)
+    renderInfo(await fetchPR(prUrl))
   } catch (e) {
     renderError(e)
   }
   postRender()
 }
+
+document
+  .querySelector('#pull-request-form')
+  .addEventListener('submit', onsubmit)
 
 window.addEventListener('hashchange', loadPR)
 loadPR()
