@@ -57,9 +57,10 @@ function buildInfoHTML(info) {
   })
 }
 
-function preRender() {
+function preRender(prUrl) {
   const infoContainers = document.querySelector('#info')
   const reviewersContainer = document.querySelector('.reviewers-wrapper')
+  document.querySelector('#pull-request-url').value = prUrl
   if (infoContainers) {
     infoContainers.remove()
   }
@@ -107,7 +108,6 @@ async function onsubmit(event) {
     renderError('Not a valid GitHub Pull request url!')
     return
   }
-  document.querySelector('#pull-request-url').value = prUrl
   window.location.hash = prUrl
 }
 
@@ -132,7 +132,7 @@ async function loadPR() {
     renderError('Not a valid GitHub Pull request url!')
     return
   }
-  preRender()
+  preRender(prUrl)
   try {
     renderInfo(await fetchPR(prUrl))
   } catch (e) {
