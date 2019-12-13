@@ -149,6 +149,7 @@ header {
       padding: 0.15rem 0.25rem;
       border-radius: var(--border-radius);
       text-transform: uppercase;
+      margin-left: 0.25rem;
       &.open {
         background-color: var(--success);
       }
