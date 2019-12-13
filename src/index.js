@@ -91,7 +91,6 @@ function renderError(error) {
 
 function renderInfo([info, reviewers]) {
   document.querySelector('#pull-request-url').value = info.html_url
-  window.location.hash = info.html_url
   const infoHTML = buildInfoHTML(info)
   const reviewersHTML = buildReviewersHTML(reviewers)
   document.querySelector('main').append(infoHTML, reviewersHTML)
@@ -104,9 +103,18 @@ async function fetchPR(prUrl) {
 
 async function onsubmit(event) {
   event.preventDefault()
-  const prUrl = GitHubPR.validatePRUrl(
-    document.querySelector('#pull-request-url').value
-  )
+  window.location.hash = document.querySelector('#pull-request-url').value
+}
+
+document
+  .querySelector('#pull-request-form')
+  .addEventListener('submit', onsubmit)
+
+async function loadPR() {
+  if (window.location.hash === '') {
+    return
+  }
+  const prUrl = GitHubPR.validatePRUrl(window.location.hash.replace(/^#/, ''))
   if (!prUrl) {
     renderError('Not a valid GitHub Pull request url!')
     return
@@ -118,21 +126,6 @@ async function onsubmit(event) {
     renderError(e)
   }
   postRender()
-}
-
-document
-  .querySelector('#pull-request-form')
-  .addEventListener('submit', onsubmit)
-
-function loadPR() {
-  if (window.location.hash !== '') {
-    document.querySelector(
-      '#pull-request-url'
-    ).value = window.location.hash.replace(/^#/, '')
-    document
-      .querySelector('#pull-request-form')
-      .dispatchEvent(new Event('submit'))
-  }
 }
 
 window.addEventListener('hashchange', loadPR)
