@@ -133,10 +133,17 @@ async function loadPR() {
     return
   }
   preRender(prUrl)
-  try {
-    renderInfo(await fetchPR(prUrl))
-  } catch (e) {
-    renderError(e)
+  if (sessionStorage[prUrl]) {
+    const { prData } = JSON.parse(sessionStorage[prUrl])
+    renderInfo(prData)
+  } else {
+    try {
+      const prData = await fetchPR(prUrl)
+      renderInfo(prData)
+      sessionStorage[prUrl] = JSON.stringify({ timestamp: Date.now(), prData })
+    } catch (e) {
+      renderError(e)
+    }
   }
   postRender()
 }
