@@ -123,33 +123,41 @@ async function fetchPR(prUrl) {
   }
 }
 
+function loadFromCache(prUrl) {
+  if (sessionStorage[prUrl]) {
+    const { timestamp, prData } = JSON.parse(sessionStorage[prUrl])
+    const fifteenMinutesInMilliseconds = 15 * 60 * 1000
+    if (Date.now() - timestamp <= fifteenMinutesInMilliseconds) {
+      return prData
+    }
+    sessionStorage.removeItem(prUrl)
+  }
+  return false
+}
+
 async function loadPR() {
   if (window.location.hash === '') {
     return
   }
+
   const prUrl = GitHubPR.validatePRUrl(window.location.hash.replace(/^#/, ''))
   if (!prUrl) {
     renderError('Not a valid GitHub Pull request url!')
     return
   }
+
+  let prData
   preRender(prUrl)
-  if (sessionStorage[prUrl]) {
-    const { timestamp, prData } = JSON.parse(sessionStorage[prUrl])
-    const fifteenMinutesInMilliseconds = 15 * 60 * 1000
-    if (Date.now() - timestamp <= fifteenMinutesInMilliseconds) {
-      renderInfo(prData)
-      postRender()
-      return
-    }
-    sessionStorage.removeItem(prUrl)
-  }
   try {
-    const prData = await fetchPR(prUrl)
+    prData = loadFromCache(prUrl) || (await fetchPR(prUrl))
     renderInfo(prData)
-    sessionStorage[prUrl] = JSON.stringify({ timestamp: Date.now(), prData })
   } catch (e) {
     renderError(e)
   }
+  sessionStorage[prUrl] = JSON.stringify({
+    timestamp: Date.now(),
+    prData,
+  })
   postRender()
 }
 
