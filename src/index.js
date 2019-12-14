@@ -141,6 +141,7 @@ async function loadPR() {
       postRender()
       return
     }
+    sessionStorage.removeItem(prUrl)
   }
   try {
     const prData = await fetchPR(prUrl)
