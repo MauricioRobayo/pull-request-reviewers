@@ -15,6 +15,7 @@ html {
   --border-radius: 4px;
   --max-width: 520px;
   --header-height: 3rem;
+  --footer-height: 4rem;
 }
 *,
 *:before,
@@ -24,6 +25,9 @@ html {
 body {
   font-family: 'Open Sans', sans-serif;
   color: var(--dusk);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 body,
 h1,
@@ -61,8 +65,8 @@ header {
 .pull-request-form-container {
   background-color: var(--main-dark);
   color: white;
-  min-height: calc(100vh - var(--header-height));
-  padding: 1rem 0 var(--header-height) 0;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding: 1rem 0 0 0;
   display: flex;
   transition: all 0.5s;
   &.collapse {
@@ -119,11 +123,11 @@ header {
   margin: 0.5rem;
   border: 1px solid currentColor;
   box-shadow: none;
-  animation: appear .5s ease forwards;
+  animation: appear 0.5s ease forwards;
 }
 
 #info {
-  background-color: #f5f6f7;;
+  background-color: #f5f6f7;
   border-bottom: 1px solid #dddfe2;
   padding: 0.5rem 0;
   .repo-info {
@@ -173,7 +177,7 @@ header {
   list-style: none;
   padding: 0.5rem;
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: 0 auto 1rem auto;
   h2.reviewers-title {
     font-size: 1.25rem;
     font-weight: bold;
@@ -219,5 +223,20 @@ header {
   }
   .user:hover {
     background-color: var(--main-lighter);
+  }
+}
+
+footer {
+  font-size: 0.75rem;
+  background-color: var(--main-dark);
+  height: var(--footer-height);
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  p {
+    margin: 0;
   }
 }
