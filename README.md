@@ -17,7 +17,7 @@ No frameworks were harmed during the making of this project.
 
 ## Live Demo
 
-https://www.mauriciorobayo.com/pr-reviewers
+http://www.mauriciorobayo.com/pull-request-reviewers/
 
 ## Getting Started
 
