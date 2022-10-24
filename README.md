@@ -17,7 +17,7 @@ No frameworks were harmed during the making of this project.
 
 ## Live Demo
 
-http://www.mauriciorobayo.com/pull-request-reviewers/
+https://mauriciorobayo.github.io/pull-request-reviewers/
 
 ## Getting Started
 
